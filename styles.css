@@ -553,6 +553,20 @@ a:hover {
     display: block;
 }
 
+.who-image-placeholder {
+    background-color: var(--color-surface);
+    border: 2px dashed var(--color-border) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+}
+
+.who-image-placeholder p {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+}
+
 /* ===== ABOUT SECTION ===== */
 .about-section {
     padding: var(--spacing-3xl) 0;
