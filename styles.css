@@ -5,7 +5,7 @@
     --color-surface-2: #141414;
     --color-border: #1F1F1F;
     --color-text: #F0EEE9;
-    --color-text-muted: #8B8B8B;
+    --color-text-muted: #FFFFFF;
     --color-accent: #60A5FA;
     --color-accent-deep: #60A5FA;
     --color-accent-light: #8DD3FF;
@@ -269,7 +269,7 @@ a:hover {
 }
 
 .nav-link {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.55);
     font-weight: 600;
     font-size: 0.75rem;
     letter-spacing: 0.12em;
@@ -339,14 +339,10 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)),
-        url('digital-marketing-team.jpg');
-    background-size: 120%;
-    background-position: center 0px;
-    background-attachment: scroll;
-    background-repeat: no-repeat;
     overflow: hidden;
+    isolation: isolate;
+    --hero-back-y: 0px;
+    --hero-content-y: 0px;
 }
 
 @keyframes backgroundZoom {
@@ -360,7 +356,30 @@ a:hover {
 
 
 .hero-background {
-    display: none;
+    position: absolute;
+    inset: -80px 0;
+    z-index: 0;
+    background-image: url('360_F_299051602_t6XooXL6EzgsCwlxasNfQhfwFeQJxTnh.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    will-change: transform;
+    pointer-events: none;
+}
+
+.hero-background-back {
+    transform: translate3d(0, var(--hero-back-y), 0);
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+        linear-gradient(to bottom, transparent 60%, #000 100%),
+        linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.55));
+    pointer-events: none;
 }
 
 .hero-content {
@@ -368,7 +387,15 @@ a:hover {
     z-index: 2;
     text-align: center;
     max-width: 700px;
+    transform: translate3d(0, var(--hero-content-y), 0);
     animation: heroContentFade 1s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-background,
+    .hero-content {
+        transform: none !important;
+    }
 }
 
 @keyframes heroContentFade {
@@ -457,8 +484,6 @@ a:hover {
 .values-section {
     padding: var(--spacing-3xl) 0;
     background-color: var(--color-surface);
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
 }
 
 .values-grid {
@@ -509,7 +534,6 @@ a:hover {
 .who-we-are {
     padding: var(--spacing-3xl) 0;
     background-color: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
 }
 
 .who-content {
@@ -727,10 +751,39 @@ a:hover {
 
 /* ===== STAFF SECTION ===== */
 .staff-section {
+    position: relative;
     padding: var(--spacing-3xl) 0;
-    background-color: var(--color-surface);
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+    --staff-back-y: 0px;
+}
+
+.staff-background {
+    position: absolute;
+    inset: -200px 0;
+    z-index: 0;
+    background-image: url('4k-firewatch-deer-at-sunset-1gr260likxa5eoze.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    will-change: transform;
+    pointer-events: none;
+    transform: translate3d(0, var(--staff-back-y), 0);
+}
+
+.staff-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(to bottom, #000 0%, transparent 18%, transparent 82%, #000 100%),
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55));
+    z-index: 1;
+    pointer-events: none;
+}
+
+.staff-section .container {
+    position: relative;
+    z-index: 2;
 }
 
 .staff-grid {
@@ -760,6 +813,138 @@ a:hover {
     background-color: var(--color-surface);
 }
 
+.staff-card-yusuf {
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+    --yusuf-bg-y: 0px;
+}
+
+.staff-card-yusuf::before {
+    content: '';
+    position: absolute;
+    inset: -80px 0;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url('805b7bf83a7a09d0eaa2551284fc67bd.jpg');
+    background-size: cover;
+    background-position: center;
+    transform: translate3d(0, var(--yusuf-bg-y), 0);
+    will-change: transform;
+    pointer-events: none;
+}
+
+.staff-card-yusuf:hover::before {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30)),
+        url('805b7bf83a7a09d0eaa2551284fc67bd.jpg');
+}
+
+.staff-card-yusuf > * {
+    position: relative;
+    z-index: 1;
+}
+
+.staff-card-alice {
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+    --alice-bg-y: 0px;
+}
+
+.staff-card-alice::before {
+    content: '';
+    position: absolute;
+    inset: -80px 0;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url('fca95983aef17642c80d38c68d889f09.jpg');
+    background-size: cover;
+    background-position: center;
+    transform: translate3d(0, var(--alice-bg-y), 0);
+    will-change: transform;
+    pointer-events: none;
+}
+
+.staff-card-alice:hover::before {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30)),
+        url('fca95983aef17642c80d38c68d889f09.jpg');
+}
+
+.staff-card-alice > * {
+    position: relative;
+    z-index: 1;
+}
+
+.staff-card-remi {
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+    --remi-bg-y: 0px;
+}
+
+.staff-card-remi::before {
+    content: '';
+    position: absolute;
+    inset: -80px 0;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url('52c86ed663dc8bae90a6a9dd3cdb1599.jpg');
+    background-size: cover;
+    background-position: center;
+    transform: translate3d(0, var(--remi-bg-y), 0);
+    will-change: transform;
+    pointer-events: none;
+}
+
+.staff-card-remi:hover::before {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30)),
+        url('52c86ed663dc8bae90a6a9dd3cdb1599.jpg');
+}
+
+.staff-card-remi > * {
+    position: relative;
+    z-index: 1;
+}
+
+.staff-card-jayda {
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+    --jayda-bg-y: 0px;
+}
+
+.staff-card-jayda::before {
+    content: '';
+    position: absolute;
+    inset: -80px 0;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url('c3529e4712f2883482ee1d0a0580e40e.jpg');
+    background-size: cover;
+    background-position: center;
+    transform: translate3d(0, var(--jayda-bg-y), 0);
+    will-change: transform;
+    pointer-events: none;
+}
+
+.staff-card-jayda:hover::before {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.30)),
+        url('c3529e4712f2883482ee1d0a0580e40e.jpg');
+}
+
+.staff-card-jayda > * {
+    position: relative;
+    z-index: 1;
+}
+
 .staff-avatar {
     margin-bottom: var(--spacing-md);
     overflow: visible;
@@ -784,6 +969,7 @@ a:hover {
 .staff-card h3 {
     color: var(--color-text);
     margin-bottom: var(--spacing-sm);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 1);
 }
 
 .staff-title {
@@ -793,6 +979,7 @@ a:hover {
     margin-bottom: var(--spacing-md);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 1);
 }
 
 .staff-bio {
@@ -804,6 +991,7 @@ a:hover {
     font-size: 0.8rem;
     color: var(--color-text-muted);
     margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 1);
 }
 
 /* ===== PORTFOLIO SECTION ===== */
@@ -811,23 +999,30 @@ a:hover {
 .portfolio-section {
     position: relative;
     padding: var(--spacing-3xl) 0;
-    background-image:
-        radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%),
-        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)),
-        url('3425e4e3d45b643e0dc7028244900993.jpg');
-    background-size: 150%;
-    background-position: center center;
+    overflow: hidden;
+    --portfolio-back-y: 0px;
+}
+
+.portfolio-background {
+    position: absolute;
+    inset: -200px 0;
+    z-index: 0;
+    background-image: url('Screenshot 2026-06-01 010431.png');
+    background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
+    will-change: transform;
+    pointer-events: none;
+    transform: translate3d(0, var(--portfolio-back-y), 0);
 }
 
 .portfolio-section::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(ellipse at center, transparent 20%, rgba(0, 0, 0, 0.6) 100%);
+    inset: 0;
+    background:
+        linear-gradient(to bottom, #000 0%, transparent 18%, transparent 82%, #000 100%),
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55));
     z-index: 1;
     pointer-events: none;
 }
@@ -893,18 +1088,37 @@ a:hover {
 
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-lg);
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .portfolio-card {
     cursor: pointer;
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(52px);
 }
 
 .portfolio-card.reveal {
-    animation: slideUpFade 0.6s ease-out forwards;
+    animation: portfolioReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.portfolio-grid .portfolio-card:nth-child(1).reveal { animation-delay: 0s; }
+.portfolio-grid .portfolio-card:nth-child(2).reveal { animation-delay: 0.1s; }
+.portfolio-grid .portfolio-card:nth-child(3).reveal { animation-delay: 0.2s; }
+.portfolio-grid .portfolio-card:nth-child(4).reveal { animation-delay: 0.3s; }
+
+@keyframes portfolioReveal {
+    from {
+        opacity: 0;
+        transform: translateY(52px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .portfolio-card img {
@@ -914,7 +1128,7 @@ a:hover {
     display: block;
     border-radius: 4px;
     border: 1px solid var(--color-border);
-    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.65s ease, border-color 0.65s ease;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
@@ -928,40 +1142,6 @@ a:hover {
     display: none;
 }
 
-.portfolio-card-empty {
-    background-color: var(--color-surface);
-    border: 2px dashed var(--color-border);
-    cursor: default;
-    opacity: 0;
-    transform: translateY(24px);
-}
-
-.portfolio-card-empty.reveal {
-    animation: slideUpFade 0.6s ease-out forwards;
-}
-
-.portfolio-card-empty:hover {
-    border-color: var(--color-border);
-    transform: none;
-    background-color: var(--color-surface);
-}
-
-.portfolio-empty-state {
-    width: 100%;
-    aspect-ratio: 18 / 24;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.portfolio-empty-state p {
-    font-size: 1.1rem;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin: 0;
-}
 
 /* ===== PORTFOLIO MODAL ===== */
 .modal {
@@ -1098,10 +1278,39 @@ a:hover {
 
 /* ===== CONTACT SECTION ===== */
 .contact-section {
+    position: relative;
     padding: var(--spacing-3xl) 0;
-    background-color: var(--color-surface);
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+    --contact-back-y: 0px;
+}
+
+.contact-background {
+    position: absolute;
+    inset: -200px 0;
+    z-index: 0;
+    background-image: url('night-mountains-minimalist-8k-wo-1920x1080.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    will-change: transform;
+    pointer-events: none;
+    transform: translate3d(0, var(--contact-back-y), 0);
+}
+
+.contact-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(to bottom, #000 0%, transparent 18%, transparent 82%, #000 100%),
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55));
+    z-index: 1;
+    pointer-events: none;
+}
+
+.contact-section .container {
+    position: relative;
+    z-index: 2;
 }
 
 .contact-wrapper {

@@ -81,6 +81,7 @@ animatableElements.forEach(el => {
 // ===== PORTFOLIO MODAL =====
 const modal = document.getElementById('portfolioModal');
 const modalClose = document.querySelector('.modal-close');
+const portfolioCards = document.querySelectorAll('.portfolio-card[data-project]');
 
 const portfolioData = {
     1: {
@@ -156,6 +157,8 @@ portfolioCards.forEach(card => {
         const projectId = card.getAttribute('data-project');
         const data = portfolioData[projectId];
 
+        if (!data) return;
+
         document.getElementById('modalTitle').textContent = data.title;
         document.getElementById('modalClient').textContent = data.client;
         document.getElementById('modalDescription').textContent = data.description;
@@ -173,18 +176,22 @@ portfolioCards.forEach(card => {
     });
 });
 
-modalClose.addEventListener('click', () => {
-    modal.classList.remove('show');
-});
-
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
+if (modalClose && modal) {
+    modalClose.addEventListener('click', () => {
         modal.classList.remove('show');
-    }
-});
+    });
+}
+
+if (modal) {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+        }
+    });
+}
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' && modal) {
         modal.classList.remove('show');
     }
 });
@@ -267,30 +274,202 @@ if (statsStrip) {
 
 // ===== PARALLAX SCROLL EFFECT =====
 const hero = document.querySelector('.hero');
-const heroContent = document.querySelector('.hero-content');
-const navbarLogo = document.querySelector('.navbar-logo');
+const portfolioSection = document.querySelector('.portfolio-section');
+const staffSection = document.querySelector('.staff-section');
+const jaydaCard = document.querySelector('.staff-card-jayda');
+const remiCard = document.querySelector('.staff-card-remi');
+const aliceCard = document.querySelector('.staff-card-alice');
+const yusufCard = document.querySelector('.staff-card-yusuf');
+const contactSection = document.querySelector('.contact-section');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let parallaxTicking = false;
+let portfolioTicking = false;
+let staffTicking = false;
+let jaydaTicking = false;
+let remiTicking = false;
+let aliceTicking = false;
+let yusufTicking = false;
+let contactTicking = false;
+
+function updateHeroParallax() {
+    parallaxTicking = false;
+
+    if (prefersReducedMotion.matches || !hero) return;
+
+    const scrollPosition = window.pageYOffset;
+    const heroRect = hero.getBoundingClientRect();
+
+    // Keep the effect active only while the hero is near the viewport.
+    if (heroRect.bottom > -120 && heroRect.top < window.innerHeight) {
+        const offset = Math.min(scrollPosition, hero.offsetHeight + 160);
+
+        hero.style.setProperty('--hero-back-y', `${offset * 0.11}px`);
+        hero.style.setProperty('--hero-content-y', `${offset * 0.07}px`);
+    }
+}
+
+function requestHeroParallaxUpdate() {
+    if (!parallaxTicking) {
+        window.requestAnimationFrame(updateHeroParallax);
+        parallaxTicking = true;
+    }
+}
+
+function updatePortfolioParallax() {
+    portfolioTicking = false;
+    if (prefersReducedMotion.matches || !portfolioSection) return;
+
+    const rect = portfolioSection.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        const offset = (window.innerHeight / 2) - (rect.top + rect.height / 2);
+        portfolioSection.style.setProperty('--portfolio-back-y', `${offset * 0.15}px`);
+    }
+}
+
+function requestPortfolioParallaxUpdate() {
+    if (!portfolioTicking) {
+        window.requestAnimationFrame(updatePortfolioParallax);
+        portfolioTicking = true;
+    }
+}
+
+function updateStaffParallax() {
+    staffTicking = false;
+    if (prefersReducedMotion.matches || !staffSection) return;
+
+    const rect = staffSection.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        const offset = (window.innerHeight / 2) - (rect.top + rect.height / 2);
+        staffSection.style.setProperty('--staff-back-y', `${offset * 0.15}px`);
+    }
+}
+
+function requestStaffParallaxUpdate() {
+    if (!staffTicking) {
+        window.requestAnimationFrame(updateStaffParallax);
+        staffTicking = true;
+    }
+}
+
+function updateJaydaParallax() {
+    jaydaTicking = false;
+    if (prefersReducedMotion.matches || !jaydaCard) return;
+
+    const rect = jaydaCard.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        const offset = (window.innerHeight / 2) - (rect.top + rect.height / 2);
+        jaydaCard.style.setProperty('--jayda-bg-y', `${offset * 0.2}px`);
+    }
+}
+
+function requestJaydaParallaxUpdate() {
+    if (!jaydaTicking) {
+        window.requestAnimationFrame(updateJaydaParallax);
+        jaydaTicking = true;
+    }
+}
+
+function updateRemiParallax() {
+    remiTicking = false;
+    if (prefersReducedMotion.matches || !remiCard) return;
+
+    const rect = remiCard.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        const offset = (window.innerHeight / 2) - (rect.top + rect.height / 2);
+        remiCard.style.setProperty('--remi-bg-y', `${offset * 0.2}px`);
+    }
+}
+
+function requestRemiParallaxUpdate() {
+    if (!remiTicking) {
+        window.requestAnimationFrame(updateRemiParallax);
+        remiTicking = true;
+    }
+}
+
+function updateAliceParallax() {
+    aliceTicking = false;
+    if (prefersReducedMotion.matches || !aliceCard) return;
+
+    const rect = aliceCard.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        const offset = (window.innerHeight / 2) - (rect.top + rect.height / 2);
+        aliceCard.style.setProperty('--alice-bg-y', `${offset * 0.2}px`);
+    }
+}
+
+function requestAliceParallaxUpdate() {
+    if (!aliceTicking) {
+        window.requestAnimationFrame(updateAliceParallax);
+        aliceTicking = true;
+    }
+}
+
+function updateYusufParallax() {
+    yusufTicking = false;
+    if (prefersReducedMotion.matches || !yusufCard) return;
+
+    const rect = yusufCard.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        const offset = (window.innerHeight / 2) - (rect.top + rect.height / 2);
+        yusufCard.style.setProperty('--yusuf-bg-y', `${offset * 0.2}px`);
+    }
+}
+
+function requestYusufParallaxUpdate() {
+    if (!yusufTicking) {
+        window.requestAnimationFrame(updateYusufParallax);
+        yusufTicking = true;
+    }
+}
+
+function updateContactParallax() {
+    contactTicking = false;
+    if (prefersReducedMotion.matches || !contactSection) return;
+
+    const rect = contactSection.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        const offset = (window.innerHeight / 2) - (rect.top + rect.height / 2);
+        contactSection.style.setProperty('--contact-back-y', `${offset * 0.15}px`);
+    }
+}
+
+function requestContactParallaxUpdate() {
+    if (!contactTicking) {
+        window.requestAnimationFrame(updateContactParallax);
+        contactTicking = true;
+    }
+}
 
 window.addEventListener('scroll', () => {
-    const scrollPosition = window.pageYOffset;
-    const heroRect = hero ? hero.getBoundingClientRect() : null;
-
-    // Only parallax background while it's in view
-    if (hero && heroRect && heroRect.bottom > 0) {
-        // Calculate parallax - background moves slower than scroll
-        const parallaxOffset = scrollPosition * 0.5;
-        hero.style.backgroundPosition = `center ${parallaxOffset}px`;
-    }
-
-    // Content parallax
-    if (heroContent) {
-        heroContent.style.transform = `translateY(${scrollPosition * 0.3}px)`;
-    }
-
-    // Logo parallax
-    if (navbarLogo) {
-        navbarLogo.style.transform = `translateY(${scrollPosition * 0.15}px)`;
-    }
+    requestHeroParallaxUpdate();
+    requestPortfolioParallaxUpdate();
+    requestStaffParallaxUpdate();
+    requestJaydaParallaxUpdate();
+    requestRemiParallaxUpdate();
+    requestAliceParallaxUpdate();
+    requestYusufParallaxUpdate();
+    requestContactParallaxUpdate();
 }, { passive: true });
+
+window.addEventListener('resize', () => {
+    requestHeroParallaxUpdate();
+    requestPortfolioParallaxUpdate();
+    requestStaffParallaxUpdate();
+    requestJaydaParallaxUpdate();
+    requestRemiParallaxUpdate();
+    requestAliceParallaxUpdate();
+    requestYusufParallaxUpdate();
+    requestContactParallaxUpdate();
+});
+requestHeroParallaxUpdate();
+requestPortfolioParallaxUpdate();
+requestStaffParallaxUpdate();
+requestJaydaParallaxUpdate();
+requestRemiParallaxUpdate();
+requestAliceParallaxUpdate();
+requestYusufParallaxUpdate();
+requestContactParallaxUpdate();
 
 // ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', () => {
